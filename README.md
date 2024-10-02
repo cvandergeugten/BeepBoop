@@ -1,5 +1,7 @@
 # BeepBoop
 
+![RoboWave](../BeepBoop/RepoImages/Robot_Wave.png)
+
 ## Overview
 
 **BeepBoop** is my first networked multiplayer game development project, presenting an exciting challenge in my game development journey. This project allows me to explore the complexities of online gameplay while creating an engaging experience for players.
