@@ -1,6 +1,8 @@
 # BeepBoop
 
-![RoboWave](../RepoImages/Robot_Wave.png)
+<p align="center">
+  <img width="460" height="300" src="https://github.com/cvandergeugten/Ninja-Game/blob/main/ProjectImages/Ninja_Game_Heading.gif">
+</p>
 
 ## Overview
 
