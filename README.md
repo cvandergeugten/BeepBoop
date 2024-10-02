@@ -1,7 +1,7 @@
 # BeepBoop
 
 <p align="center">
-  <img width="460" height="300" src="https://github.com/cvandergeugten/BeepBoop/blob/main/RepoImages/Robot_Wave.png">
+  <img width="250" height="300" src="https://github.com/cvandergeugten/BeepBoop/blob/main/RepoImages/Robot_Wave.png">
 </p>
 
 ## Overview
