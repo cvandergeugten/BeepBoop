@@ -1,6 +1,6 @@
 # BeepBoop
 
-![RoboWave](../BeepBoop/RepoImages/Robot_Wave.png)
+![RoboWave](../RepoImages/Robot_Wave.png)
 
 ## Overview
 
