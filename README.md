@@ -1,7 +1,7 @@
 # BeepBoop
 
 <p align="center">
-  <img width="460" height="300" src="[https://github.com/cvandergeugten/Ninja-Game/blob/main/ProjectImages/Ninja_Game_Heading.gif](https://github.com/cvandergeugten/BeepBoop/blob/main/RepoImages/Robot_Wave.png)">
+  <img width="460" height="300" src="https://github.com/cvandergeugten/BeepBoop/blob/main/RepoImages/Robot_Wave.png">
 </p>
 
 ## Overview
