@@ -1,29 +1,37 @@
 # BeepBoop
 
-## Multiplayer Game Development
+## Overview
 
-This project marks my first experience with programming a networked multiplayer game. The added complexity of developing a networked game has proven to be a fun and exciting challenge in my game development journey!
+**BeepBoop** is my first networked multiplayer game development project, presenting an exciting challenge in my game development journey. This project allows me to explore the complexities of online gameplay while creating an engaging experience for players.
 
-## Game Design
+## Game Design Principles
 
-For this project, I adhere to three simple design motifs: **Toy Box**, **Embrace Distraction**, and **Comical**. Throughout development, I design puzzles and interactable objects that align with these motifs and scale for multiple players.
+In crafting BeepBoop, I focus on three key design motifs:
+- **Toy Box:** Creating a playful environment where players can experiment and enjoy themselves.
+- **Embrace Distraction:** Incorporating fun, whimsical elements that keep players engaged and entertained.
+- **Comical:** Ensuring that humor is woven into the gameplay through lighthearted puzzles and interactions.
 
 ## Game Engine
 
-Most of my game development projects have been done using Unity. However, for this project, I decided to switch to **Unreal Engine** to leverage high-fidelity assets and strengthen my C++ skills. Thankfully, many systems between the two engines are similar, allowing me to apply the skills I've learned in Unity to this project.
+While most of my previous projects were developed in **Unity**, I chose to use **Unreal Engine** for BeepBoop. This transition allows me to leverage high-fidelity assets and strengthen my C++ skills, as I adapt the foundational knowledge from Unity to Unreal's environment.
 
-## C++ Emote System
+## Core Features
 
-As this project is still a work in progress, the videos showcase game mechanics and designs as they are developed.
+### Emote System
+To promote interaction and engagement among players, I implemented an **Emote System**. This system allows players to express themselves and have fun while navigating the game world. Key components include:
+- A functional **UI menu** for selecting emotes.
+- A configured **animation state machine** to manage player animations.
+- **Animation replication** to ensure consistent experiences across all connected clients.
 
-## Dev Log
+### Pressure Plate Mechanic
+I developed a **Pressure Plate System** to enhance interactivity within the game. Features include:
+- Functionality as switches for various in-game events.
+- Capability to link with other game objects, like doors and platforms.
+- Triggering by player actions or interactions with other objects, fostering dynamic gameplay experiences.
 
-To align with the design motifs of **Comedy** and **Embracing Distraction**, I developed an emote system that enables players to interact and have fun with each other while navigating the game world. This system involves creating a functional UI menu, configuring the player's animation state machine, and ensuring animations replicate correctly to each connected client.
+## Networking and Server Architecture
 
-## Pressure Plates
-
-I developed a pressure plate system to enhance game interactivity. These plates can be used as switches, linked to other game objects or events, and triggered by players or objects. This system is ideal for doors, platforms, and generating in-game events.
-
-## Creating & Joining a Server
-
-Unreal Engine utilizes a client-server model to run games across multiple machines. One machine acts as a **listen server**, allowing players with the right credentials to connect as clients and run the simulation. I leveraged Unreal Engine's multiplayer subsystem to build functionality for creating and joining game sessions, where one player hosts the game server on their machine, and others connect as clients.
+BeepBoop utilizes a **client-server model** to facilitate multiplayer interactions across different machines:
+- One machine acts as a **listen server**, allowing players to connect as clients.
+- I leveraged Unreal Engine's **multiplayer subsystem** to create and join game sessions seamlessly.
+- Players can host game servers on their machines, enabling others to join and participate in the game.
