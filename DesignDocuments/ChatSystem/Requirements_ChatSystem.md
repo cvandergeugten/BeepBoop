@@ -1,58 +1,51 @@
-# In-Game Text Chat System Requirements Document
-
 ## 1. **Introduction**
-   - **Purpose**: Outline the functional and non-functional requirements for the text chat system in the robot game.
-   - **Scope**: In-game text communication feature that allows players to send and receive messages.
-   - **Definitions**: Key terms related to chat system (e.g., "Message", "Chatbox", "Player", etc.).
-   - **Stakeholders**: Game developers, players, testers, network administrators.
+### Purpose
+This documents outlines the functional and non-functional requirements for the text chat system in Beep Boop.
+### Scope
+In-game text communication feature that allows players to send and view messages in a global chat box.
 
 ## 2. **System Overview**
-   - **System Description**: A brief overview of the chat system within the game.
-   - **Assumptions**: Assumptions about the game environment, network, and users.
+### System Description 
+This system will provide a chat box in the lower left corner of the player's HUD which can be used for real-time communication. The chat box will take a small amount of space to prevent HUD bloat, but will have the ability to expand for a larger view of chat history.
+### Assumptions
+
+
+#### 1. **Game Environment Assumptions**
+   - **Multiplayer Environment**: The game will have a multiplayer setup where players are connected through shared game sessions.
+   - **Fixed Player Limit**: Each game session will have a maximum of X players, which ensures that the chat system doesn’t need to scale indefinitely.
+   - **Dedicated Chat Interface**: There will be a dedicated interface for displaying and entering chat messages that doesn’t obstruct gameplay.
+   - **Game Focused on Robots**: Since the game revolves around robots, the chat system should align with the aesthetic and functionality of the overall game design.
+   - **Interaction Zones**: Players can interact through chat regardless of their physical proximity in the game world.
+   - **No Voice Chat Integration**: The assumption is that the game will rely purely on text-based communication, not requiring a voice chat system.
+
+#### 2. **Network Assumptions**
+   - **Sufficient Bandwidth**: The text-based chat system will consume minimal bandwidth compared to other in-game activities like rendering or physics calculations, so it won't cause significant performance issues.
+   - **Persistent Connection**: Players remain connected to the server throughout the game session, and the chat system should handle brief disconnections without losing messages.
+
+#### 3. **User Assumptions**
+   - **Players Are Familiar with Chat Systems**: It is assumed that players have used similar text-based chat systems in other multiplayer games, so the interface doesn’t require extensive tutorials.
+   - **Keyboard Support**: Since Beep Boop is being developed exclusively for PC, users will be entering messages via keyboard.
+   - **Multilingual Player Base**: Some players may communicate in different languages, and the system should handle non-English characters without issues.
+   - **Player Behavior**: While most players will use the chat system responsibly, there is an assumption that chat filtering will be needed for inappropriate language or spam prevention.
    - **Dependencies**: Unreal Engine, Multiplayer Framework, Server Communication, User Interface (UI).
 
 ## 3. **Functional Requirements**
    ### 3.1 **Core Functionality**
-   - **Text Message Sending**: Players can send messages to other players in the same session.
-   - **Text Message Receiving**: Players receive messages sent by others in real-time.
-   - **Chat Channels**: Different types of chat (Global, Team, Private).
-   - **Message Formatting**: Support for text formatting (colors, emojis, etc.).
+   - **Text Message Sending**: Players can send messages to the global chat box.
+   - **Text Message Viewing**: Players can view messages sent by others in in the global chat box.
+   - **Message Formatting**: Support for text formatting (colors, emojis, etc.). (Nice to have)
    - **Chat Filtering**: Filtering inappropriate language or spam detection.
 
    ### 3.2 **User Interface**
-   - **Chatbox**: Design of the in-game chatbox interface (size, position, opacity).
-   - **Message Notifications**: How new messages are displayed (pop-ups, notifications).
-   - **User Input**: Method for entering and sending messages (keyboard, game controller).
+   - **Chatbox**: Chat box in the lower left corner of the player's HUD. Can be in a minimized or expanded state.
+   - **Message Display**: Messages are displayed in the the chat box. When the chat box is minimized, the chat box will only display up to 5 of the most recent messages. When the chat box is expanded, it will display as many messages as can fit in the expanded UI widget (size still to be determined).
+   - **User Input**: Player's will be able to click on the message bar, or press enter to initiate the message sending process. Players will be able to use the mouse wheel to scroll up and down through the message log when the chat box is expanded. The player can click outside of the chat box or press enter again to minimize the widget.
    
    ### 3.3 **User Management**
    - **Mute/Block Players**: Ability for users to mute/block other players.
-   - **Player Tagging**: Allow tagging other players in messages (e.g., @PlayerName).
-
-   ### 3.4 **Performance Requirements**
-   - **Real-time Messaging**: Messages must be sent/received with minimal latency (<1 second).
-   - **Scalability**: System must support up to X players without noticeable performance degradation.
 
 ## 4. **Non-Functional Requirements**
    - **Usability**: Easy to use interface, no more than two clicks to send a message.
-   - **Reliability**: High uptime (99.9% availability).
-   - **Security**: Encrypted communication to protect chat data.
    - **Localization**: Support for multiple languages.
-   - **Accessibility**: Chat features must be accessible to users with disabilities (e.g., screen readers).
+   - **Accessibility**: For now, being able to change the font size will be the only available accessibility feature.
 
-## 5. **System Architecture**
-   - **Client-Server Model**: Explanation of how messages are transmitted from client to server and distributed to other players.
-   - **Data Flow Diagram**: Visual representation of message flow.
-   - **Error Handling**: Plan for message failure scenarios and retries.
-
-## 6. **Testing and Validation**
-   - **Unit Tests**: Tests for individual components (e.g., sending, receiving, chat filtering).
-   - **Integration Tests**: End-to-end testing of message flow in a multiplayer session.
-   - **Performance Tests**: Load testing under high player counts.
-
-## 7. **Risks and Mitigations**
-   - **Latency Issues**: Risk of high latency in certain network conditions.
-   - **Spam/Abuse**: Plan for filtering or blocking disruptive behavior.
-   - **Scalability**: Risks of system performance decreasing with a large number of players.
-
-## 8. **Glossary**
-   - Definitions of any specific terms used throughout the document.
