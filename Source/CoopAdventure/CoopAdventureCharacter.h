@@ -111,6 +111,9 @@ protected:
 
 	/* Called to open and close the emote menu*/
 	void EmoteMenu(const FInputActionValue& Value);
+	/* called for item pickup interraction */
+	void PickUpItem(const FInputActionValue& Value);
+	void SelectItem(const FInputActionValue& Value);
 	
 
 protected:

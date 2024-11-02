@@ -222,6 +222,18 @@ void ACoopAdventureCharacter::EmoteMenu(const FInputActionValue& Value)
 	}
 }
 
+void ACoopAdventureCharacter::PickUpItem(const FInputActionValue& Value)
+{
+	//simple implementation to check server interaction
+
+
+}
+
+void ACoopAdventureCharacter::SelectItem(const FInputActionValue& Value)
+{
+
+}
+
 // Waving emote functions
 void ACoopAdventureCharacter::OnRep_IsWaving()
 {
