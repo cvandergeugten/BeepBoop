@@ -47,6 +47,10 @@ class ACoopAdventureCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputMappingContext* EmoteMenuMappingContext;
 
+	/** Emote Menu MappingContext */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputMappingContext* ChatBoxMappingContext;
+
 	// INPUT ACTIONS
 
 	/** Jump Input Action */
@@ -70,6 +74,16 @@ class ACoopAdventureCharacter : public ACharacter
 	Opens and closes the emote menu*/
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* EmoteMenuAction;
+
+	/** ChatBox Input Action
+	Directs the user to the chat box input text where the user can type a message*/
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* EnterChatBoxAction;
+
+	/** ChatBox Input Action
+	Sends a message to the chat box if text is present in the input field, otherwise exits the chat box*/
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* SendChatMessageAction;
 
 
 public:
@@ -111,6 +125,12 @@ protected:
 
 	/* Called to open and close the emote menu*/
 	void EmoteMenu(const FInputActionValue& Value);
+
+	/* Called to enter the chat box*/
+	void EnterChatBox(const FInputActionValue& Value);
+
+	/* Called to send a message to the chat box or exit the chat box*/
+	void SendChatMessage(const FInputActionValue& Value);
 	
 
 protected:

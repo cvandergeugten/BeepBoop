@@ -138,6 +138,9 @@ void ACoopAdventureCharacter::SetupPlayerInputComponent(UInputComponent* PlayerI
 
 		// Emote Menu
 		EnhancedInputComponent->BindAction(EmoteMenuAction, ETriggerEvent::Started, this, &ACoopAdventureCharacter::EmoteMenu);
+
+		// Enter Chat Box
+		EnhancedInputComponent->BindAction(EnterChatBoxAction, ETriggerEvent::Started, this, &ACoopAdventureCharacter::EnterChatBox);
 	}
 	else
 	{
@@ -221,6 +224,19 @@ void ACoopAdventureCharacter::EmoteMenu(const FInputActionValue& Value)
 		SetMappingContext(DefaultMappingContext);
 	}
 }
+
+void ACoopAdventureCharacter::EnterChatBox(const FInputActionValue& Value)
+{
+	SetMappingContext(ChatBoxMappingContext);
+}
+
+void ACoopAdventureCharacter::SendChatMessage(const FInputActionValue& Value)
+{
+
+}
+
+
+/// EMOTE SYSTEM FUNCTIONS ///
 
 // Waving emote functions
 void ACoopAdventureCharacter::OnRep_IsWaving()
