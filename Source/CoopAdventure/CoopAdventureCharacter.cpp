@@ -9,6 +9,8 @@
 #include "GameFramework/Controller.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "UtilityFunctions.h"
+#include "InteractableObject.h"
 
 #include "Net/UnrealNetwork.h"
 #include "Engine/Engine.h"
@@ -67,6 +69,9 @@ ACoopAdventureCharacter::ACoopAdventureCharacter()
 	bIsDoingPushup = false;
 	bIsDoingJumpingJack = false;
 	bIsDoingBackflip = false;
+	
+	//Initialize object select variables
+	SelectRange = 30;
 }
 
 void ACoopAdventureCharacter::SetMappingContext(UInputMappingContext* MappingContext)
@@ -138,6 +143,9 @@ void ACoopAdventureCharacter::SetupPlayerInputComponent(UInputComponent* PlayerI
 
 		// Emote Menu
 		EnhancedInputComponent->BindAction(EmoteMenuAction, ETriggerEvent::Started, this, &ACoopAdventureCharacter::EmoteMenu);
+
+		//Select Object
+		EnhancedInputComponent->BindAction(SelectAction, ETriggerEvent::Triggered, this, &ACoopAdventureCharacter::TrySelectObject);
 	}
 	else
 	{
@@ -150,7 +158,7 @@ void ACoopAdventureCharacter::Move(const FInputActionValue& Value)
 {
 	// input is a Vector2D
 	FVector2D MovementVector = Value.Get<FVector2D>();
-
+	
 	if (Controller != nullptr)
 	{
 		// find out which way is forward
@@ -222,15 +230,29 @@ void ACoopAdventureCharacter::EmoteMenu(const FInputActionValue& Value)
 	}
 }
 
-void ACoopAdventureCharacter::PickUpItem(const FInputActionValue& Value)
+void ACoopAdventureCharacter::PickUpObject(const FInputActionValue& Value)
 {
 	//simple implementation to check server interaction
 
 
 }
 
-void ACoopAdventureCharacter::SelectItem(const FInputActionValue& Value)
+void ACoopAdventureCharacter::TrySelectObject(const FInputActionValue& Value)
 {
+	if (GEngine) {
+		GEngine->AddOnScreenDebugMessage(1, 30.f, FColor::Red, TEXT("TrySelectObject called"));
+	}
+	AddMovementInput(FVector(10, 10, 10), 5);
+	AActor* FoundObject = PerformRaycastFromMouse(this->GetWorld(), (APlayerController*)GetController());
+	if (!FoundObject) 
+	{
+		UE_LOG(LogTemp, Warning, TEXT("PerformRaycastFromMouse returned NULL"));
+		return;
+	}
+	else if (AInteractableObject* InteractibleObject = CastChecked<AInteractableObject>(FoundObject))
+	{
+		InteractibleObject->EnableHighlight();
+	}
 
 }
 

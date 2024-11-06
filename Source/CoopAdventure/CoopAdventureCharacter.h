@@ -71,6 +71,10 @@ class ACoopAdventureCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* EmoteMenuAction;
 
+	/** Select Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* SelectAction;
+
 
 public:
 	ACoopAdventureCharacter();
@@ -112,8 +116,9 @@ protected:
 	/* Called to open and close the emote menu*/
 	void EmoteMenu(const FInputActionValue& Value);
 	/* called for item pickup interraction */
-	void PickUpItem(const FInputActionValue& Value);
-	void SelectItem(const FInputActionValue& Value);
+	void PickUpObject(const FInputActionValue& Value);
+	
+	void TrySelectObject(const FInputActionValue& Value);
 	
 
 protected:
@@ -178,6 +183,11 @@ protected:
 	UFUNCTION()
 	void OnRep_DoingBackflip();
 
+	// Object Select Variables
+
+	UPROPERTY(BlueprintReadWrite)
+	float SelectRange;
+	
 
 	
 
