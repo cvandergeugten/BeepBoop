@@ -81,6 +81,11 @@ class ACoopAdventureCharacter : public ACharacter
 	UInputAction* EnterChatBoxAction;
 
 	/** ChatBox Input Action
+	Directs the user to the chat box input text where the user can type a message*/
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* ExitChatBoxAction;
+
+	/** ChatBox Input Action
 	Sends a message to the chat box if text is present in the input field, otherwise exits the chat box*/
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* SendChatMessageAction;
@@ -128,6 +133,9 @@ protected:
 
 	/* Called to enter the chat box*/
 	void EnterChatBox(const FInputActionValue& Value);
+
+	/* Called to exit the chat box*/
+	void ExitChatBox(const FInputActionValue& Value);
 
 	/* Called to send a message to the chat box or exit the chat box*/
 	void SendChatMessage(const FInputActionValue& Value);
