@@ -10,7 +10,7 @@ AChatManager::AChatManager()
 
 void AChatManager::SendMessage(FString Message)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, TEXT("Send Message"));
+	MessageLog.Add(Message);
 }
 
 void AChatManager::BeginPlay()
