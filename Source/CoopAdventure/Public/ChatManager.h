@@ -9,6 +9,9 @@
 /**
  * 
  */
+
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMessageLogUpdated);
+
 UCLASS()
 class COOPADVENTURE_API AChatManager : public AActor
 {
@@ -17,11 +20,16 @@ class COOPADVENTURE_API AChatManager : public AActor
 public:
 	AChatManager();
 
-	UPROPERTY(BlueprintReadWrite)
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	UPROPERTY(ReplicatedUsing = OnRep_UpdateMessageLog, BlueprintReadWrite)
 	TArray<FString> MessageLog;
 
-	UFUNCTION(BlueprintCallable)
-	void SendMessage(FString Message);
+	UFUNCTION()
+	void OnRep_UpdateMessageLog();
+
+	UFUNCTION()
+	void UpdateMessageLog(const FString& Message);
 
 protected:
 	// Called when the game starts or when spawned

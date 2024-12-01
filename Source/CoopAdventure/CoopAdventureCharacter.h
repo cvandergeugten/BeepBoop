@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
 #include "Animation/AnimMontage.h"
+#include "ChatManager.h"
 #include "CoopAdventureCharacter.generated.h"
 
 class USpringArmComponent;
@@ -16,6 +17,7 @@ class UUserWidget;
 struct FInputActionValue;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMessageLogUpdated, const FString&, Message);
 
 
 UCLASS(config=Game)
@@ -80,21 +82,13 @@ class ACoopAdventureCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* EnterChatBoxAction;
 
-	/** ChatBox Input Action
-	Directs the user to the chat box input text where the user can type a message*/
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	UInputAction* ExitChatBoxAction;
-
-	/** ChatBox Input Action
-	Sends a message to the chat box if text is present in the input field, otherwise exits the chat box*/
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	UInputAction* SendChatMessageAction;
-
 
 public:
 	ACoopAdventureCharacter();
 
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Emote System
 
 	UFUNCTION(Server, Reliable, BlueprintCallable)
 	void ServerSetIsWaving(bool NewIsWaving);
@@ -114,6 +108,16 @@ public:
 	UFUNCTION(Server, Reliable, BlueprintCallable)
 	void ServerSetIsDoingBackflip(bool NewIsDoingBackflip);
 
+	// Chat System
+
+	UFUNCTION(BlueprintCallable)
+	void SendChatMessage(const FString& Message);
+
+	UFUNCTION(Server, Reliable, BlueprintCallable)
+	void ServerSendChatMessage(const FString& Message);
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	AChatManager* ChatManager;
 
 
 
@@ -134,11 +138,6 @@ protected:
 	/* Called to enter the chat box*/
 	void EnterChatBox(const FInputActionValue& Value);
 
-	/* Called to exit the chat box*/
-	void ExitChatBox(const FInputActionValue& Value);
-
-	/* Called to send a message to the chat box or exit the chat box*/
-	void SendChatMessage(const FInputActionValue& Value);
 	
 
 protected:

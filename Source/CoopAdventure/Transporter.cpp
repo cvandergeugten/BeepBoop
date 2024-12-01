@@ -3,7 +3,6 @@
 
 #include "Transporter.h"
 #include "PressurePlate.h"
-#include "CollectibleKey.h"
 
 UTransporter::UTransporter()
 {
@@ -40,12 +39,6 @@ void UTransporter::BeginPlay()
 			PressurePlateActor->OnActivated.AddDynamic(this, &UTransporter::OnTriggerActorActivated);
 			PressurePlateActor->OnDeactivated.AddDynamic(this, &UTransporter::OnTriggerActorDeactivated);
 			continue;
-		}
-
-		ACollectibleKey* KeyActor = Cast<ACollectibleKey>(TA);
-		if (KeyActor)
-		{
-			KeyActor->OnCollected.AddDynamic(this, &UTransporter::OnTriggerActorActivated);
 		}
 	}
 	
