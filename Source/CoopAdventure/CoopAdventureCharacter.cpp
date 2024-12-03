@@ -236,7 +236,14 @@ void ACoopAdventureCharacter::EmoteMenu(const FInputActionValue& Value)
 /// CHAT SYSTEM FUNCITONS ///
 void ACoopAdventureCharacter::SendChatMessage(const FString& Message)
 {
-	ChatManager->UpdateMessageLog(Message);
+	if (HasAuthority())
+	{
+		ChatManager->UpdateMessageLog(Message);
+	}
+	else
+	{
+		ServerSendChatMessage(Message);
+	}
 }
 
 void ACoopAdventureCharacter::ServerSendChatMessage_Implementation(const FString& Message)

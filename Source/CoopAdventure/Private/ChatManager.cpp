@@ -22,11 +22,13 @@ void AChatManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLife
 void AChatManager::OnRep_UpdateMessageLog()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "OnRep Function Called");
+	OnMessageLogUpdated.Broadcast();
 }
 
 void AChatManager::UpdateMessageLog(const FString& Message)
 {
 	MessageLog.Add(Message);
+	OnMessageLogUpdated.Broadcast();
 }
 
 void AChatManager::BeginPlay()

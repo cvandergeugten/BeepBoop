@@ -10,7 +10,7 @@
  * 
  */
 
-//DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMessageLogUpdated);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMessageLogUpdated);
 
 UCLASS()
 class COOPADVENTURE_API AChatManager : public AActor
@@ -30,6 +30,9 @@ public:
 
 	UFUNCTION()
 	void UpdateMessageLog(const FString& Message);
+
+	UPROPERTY(BlueprintAssignable, Category = "Chat")
+	FOnMessageLogUpdated OnMessageLogUpdated;
 
 protected:
 	// Called when the game starts or when spawned

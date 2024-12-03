@@ -17,7 +17,6 @@ class UUserWidget;
 struct FInputActionValue;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMessageLogUpdated, const FString&, Message);
 
 
 UCLASS(config=Game)
