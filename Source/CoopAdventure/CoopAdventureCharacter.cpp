@@ -1,19 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "CoopAdventureCharacter.h"
-#include "Engine/LocalPlayer.h"
-#include "Camera/CameraComponent.h"
-#include "Components/CapsuleComponent.h"
-#include "GameFramework/CharacterMovementComponent.h"
-#include "GameFramework/SpringArmComponent.h"
-#include "GameFramework/Controller.h"
-#include "EnhancedInputComponent.h"
-#include "EnhancedInputSubsystems.h"
-
-#include "Net/UnrealNetwork.h"
-#include "Engine/Engine.h"
-
-#include "InputActionValue.h"
+#include "BeepBoopPreCompiled.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -67,6 +55,18 @@ ACoopAdventureCharacter::ACoopAdventureCharacter()
 	bIsDoingPushup = false;
 	bIsDoingJumpingJack = false;
 	bIsDoingBackflip = false;
+
+	// Chat System
+	// Get all actors with the tag "ChatManager"
+	TArray<AActor*> FoundActors;
+	UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName("ChatManager"), FoundActors);
+
+	// Check if we found any actor with the tag
+	if (FoundActors.Num() > 0)
+	{
+		// Cast the first found actor to the ChatManager class
+		ChatManager = Cast<AChatManager>(FoundActors[0]);
+	}
 }
 
 void ACoopAdventureCharacter::SetMappingContext(UInputMappingContext* MappingContext)
@@ -85,6 +85,7 @@ void ACoopAdventureCharacter::GetLifetimeReplicatedProps(TArray<FLifetimePropert
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	// Emote System
 	DOREPLIFETIME(ACoopAdventureCharacter, bIsWaving);
 	DOREPLIFETIME(ACoopAdventureCharacter, bIsTutDancing);
 	DOREPLIFETIME(ACoopAdventureCharacter, bIsCelebrating);
@@ -138,11 +139,20 @@ void ACoopAdventureCharacter::SetupPlayerInputComponent(UInputComponent* PlayerI
 
 		// Emote Menu
 		EnhancedInputComponent->BindAction(EmoteMenuAction, ETriggerEvent::Started, this, &ACoopAdventureCharacter::EmoteMenu);
+
+		// Enter Chat Box
+		EnhancedInputComponent->BindAction(EnterChatBoxAction, ETriggerEvent::Started, this, &ACoopAdventureCharacter::EnterChatBox);
+
 	}
 	else
 	{
 		UE_LOG(LogTemplateCharacter, Error, TEXT("'%s' Failed to find an Enhanced Input component! This template is built to use the Enhanced Input system. If you intend to use the legacy system, then you will need to update this C++ file."), *GetNameSafe(this));
 	}
+}
+
+void ACoopAdventureCharacter::EnterChatBox(const FInputActionValue& Value)
+{
+
 }
 
 
@@ -221,6 +231,29 @@ void ACoopAdventureCharacter::EmoteMenu(const FInputActionValue& Value)
 		SetMappingContext(DefaultMappingContext);
 	}
 }
+
+
+/// CHAT SYSTEM FUNCITONS ///
+void ACoopAdventureCharacter::SendChatMessage(const FString& Message)
+{
+	if (HasAuthority())
+	{
+		ChatManager->UpdateMessageLog(Message);
+	}
+	else
+	{
+		ServerSendChatMessage(Message);
+	}
+}
+
+void ACoopAdventureCharacter::ServerSendChatMessage_Implementation(const FString& Message)
+{
+	SendChatMessage(Message);
+}
+
+
+
+/// EMOTE SYSTEM FUNCTIONS ///
 
 // Waving emote functions
 void ACoopAdventureCharacter::OnRep_IsWaving()

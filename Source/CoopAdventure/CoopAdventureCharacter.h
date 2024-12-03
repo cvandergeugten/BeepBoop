@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
 #include "Animation/AnimMontage.h"
+#include "ChatManager.h"
 #include "CoopAdventureCharacter.generated.h"
 
 class USpringArmComponent;
@@ -47,6 +48,10 @@ class ACoopAdventureCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputMappingContext* EmoteMenuMappingContext;
 
+	/** Emote Menu MappingContext */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputMappingContext* ChatBoxMappingContext;
+
 	// INPUT ACTIONS
 
 	/** Jump Input Action */
@@ -71,11 +76,18 @@ class ACoopAdventureCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* EmoteMenuAction;
 
+	/** ChatBox Input Action
+	Directs the user to the chat box input text where the user can type a message*/
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* EnterChatBoxAction;
+
 
 public:
 	ACoopAdventureCharacter();
 
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Emote System
 
 	UFUNCTION(Server, Reliable, BlueprintCallable)
 	void ServerSetIsWaving(bool NewIsWaving);
@@ -95,6 +107,16 @@ public:
 	UFUNCTION(Server, Reliable, BlueprintCallable)
 	void ServerSetIsDoingBackflip(bool NewIsDoingBackflip);
 
+	// Chat System
+
+	UFUNCTION(BlueprintCallable)
+	void SendChatMessage(const FString& Message);
+
+	UFUNCTION(Server, Reliable, BlueprintCallable)
+	void ServerSendChatMessage(const FString& Message);
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	AChatManager* ChatManager;
 
 
 
@@ -111,6 +133,10 @@ protected:
 
 	/* Called to open and close the emote menu*/
 	void EmoteMenu(const FInputActionValue& Value);
+
+	/* Called to enter the chat box*/
+	void EnterChatBox(const FInputActionValue& Value);
+
 	
 
 protected:
