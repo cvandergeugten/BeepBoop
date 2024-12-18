@@ -2,6 +2,9 @@
 
 
 #include "PressurePlate.h"
+#include "UObject/ConstructorHelpers.h"
+
+
 
 // Sets default values
 APressurePlate::APressurePlate()
@@ -20,31 +23,34 @@ APressurePlate::APressurePlate()
 	TriggerMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TriggerMesh"));
 	TriggerMesh->SetupAttachment(RootComp);
 	TriggerMesh->SetIsReplicated(true);
+	TriggerMesh->SetRelativeScale3D(FVector(3.3f, 3.3f, 0.2f));
+	TriggerMesh->SetRelativeLocation(FVector(0.0f, 0.0f, 0.2f));
 
-	auto TriggerMeshAsset = ConstructorHelpers::FObjectFinder<UStaticMesh>(TEXT("/Game/StarterContent/Shapes/Shape_Cylinder"));
+	/*auto TriggerMeshAsset = ConstructorHelpers::FObjectFinder<UStaticMesh>(TEXT("/Game/StarterContent/Shapes/Shape_Cylinder"));
 	if (TriggerMeshAsset.Succeeded())
 	{
 		TriggerMesh->SetStaticMesh(TriggerMeshAsset.Object);
-		TriggerMesh->SetRelativeScale3D(FVector(3.3f, 3.3f, 0.2f));
-		TriggerMesh->SetRelativeLocation(FVector(0.0f, 0.0f, 0.2f));
-	}
+		
+	}*/
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->SetupAttachment(RootComp);
 	Mesh->SetIsReplicated(true);
+	Mesh->SetRelativeScale3D(FVector(4.0f, 4.0f, 0.5f));
+	Mesh->SetRelativeLocation(FVector(0.0f, 0.0f, 7.2f));
 
-	auto MeshAsset = ConstructorHelpers::FObjectFinder<UStaticMesh>(TEXT("/Game/Stylized_Egypt/Meshes/building/SM_building_part_08"));
+	/*auto MeshAsset = ConstructorHelpers::FObjectFinder<UStaticMesh>(TEXT("/Game/Stylized_Egypt/Meshes/building/SM_building_part_08"));
 	if (MeshAsset.Succeeded())
 	{
 		Mesh->SetStaticMesh(MeshAsset.Object);
-		Mesh->SetRelativeScale3D(FVector(4.0f, 4.0f, 0.5f));
-		Mesh->SetRelativeLocation(FVector(0.0f, 0.0f, 7.2f));
-	}
+		
+	}*/
 
 	// Pressure plate "animation"
 	Transporter = CreateDefaultSubobject<UTransporter>(TEXT("Transporter"));
 	Transporter->SetIsReplicated(true);
 	Transporter->MoveTime = 0.25f;
+
 	
 
 }
